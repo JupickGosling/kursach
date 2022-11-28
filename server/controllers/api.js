@@ -4,7 +4,7 @@ const fs = require('fs');
 module.exports = class API {
     static async fetchAllPost(req, res){
         try {
-            const posts = await Post.find();
+            const posts = await Post.find().sort({created: -1});
             res.status(200).json(posts);
         } catch (err) {
             res.status(404).json({message: err.message});

@@ -68,6 +68,7 @@
 </template>
 
 <script>
+var FormData = require('form-data');
   export default {
     data: () => ({ drawer: null,
     items: [
