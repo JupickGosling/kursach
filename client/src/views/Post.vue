@@ -10,8 +10,8 @@
                                 <v-btn small outlined colors="primary">{{post.category}}</v-btn>
                             </v-col>
                             <v-col sm="10" class="d-flex justify-end">
-                                <v-btn color="success">Edit</v-btn>
-                                <v-btn color="red">Delete</v-btn>
+                                <v-btn color="success" text :to="{name: 'edit-post',params:{id:post._id}}">Edit</v-btn>
+                                <v-btn color="red" text @click="removePost(post._id)">Delete</v-btn>
                             </v-col>
                         </v-row>
                     </v-card-actions>
@@ -39,6 +39,12 @@ import API from "../api";
         async created(){
             const response = await API.getPostByID(this.$route.params.id);
             this.post = response;
+        },
+        methods:{
+            async removePost(id){
+                const response = await API.delPost(id);
+                this.$router.push({ name: 'home', params: {message: response.message} });
+            }
         }
     }
 </script>
