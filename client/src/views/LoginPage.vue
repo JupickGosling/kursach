@@ -1,3 +1,4 @@
+<!-- #region 1 Способ -->
 <template>
     <div class="login-page">
         <div class="form">
@@ -120,3 +121,4 @@ body {
   -moz-osx-font-smoothing: grayscale;      
 }
 </style>
+<!-- #endregion -->
