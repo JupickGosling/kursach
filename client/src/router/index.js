@@ -28,6 +28,11 @@ const routes = [
     component: EditPost,
   },
   {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "about" */ '../views/LoginPage.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
