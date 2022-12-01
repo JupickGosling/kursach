@@ -74,6 +74,7 @@ var FormData = require('form-data');
     items: [
       { title: 'Home', icon: 'mdi-home', link: "/" },
       { title: 'Add post', icon: 'mdi-note-plus', link: "/add-post" },
+      { title: 'Login', icon: 'mdi-account', link: "/login" },
       { title: 'About', icon: 'mdi-help-box', link: "/about" },
     ],
     admins: [
