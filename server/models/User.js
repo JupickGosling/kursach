@@ -10,6 +10,10 @@ const userShema = mongoose.Schema({
         type: String,
         require: true
     },
+    role:{
+        type: String,
+        default: "Пользователь"
+    },
     created: {
         type: Date,
         default: Date.now
