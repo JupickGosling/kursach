@@ -12,20 +12,31 @@ module.exports = class AUTH {
     }
 
     static async registerUser(req, res){
-        const user = req.body;
-        try {
+        const condidate = await User.findOne({email: req.body.email})
+        
+        if(condidate){
+            res.status(409).json({message: 'Пользователь с таким email уже есть!'});
+        }else{
+            const user = req.body;
+            try {
             await User.create(user);
             res.status(201).json({message: 'User created!'});
-        } catch (err) {
+            } catch (err) {
             res.status(400).json({message: err.message});
+            }
         }
     }
 
     static async loginUser(req, res){
-        const email = req.params.email;
+        // const email = req.body.email;
+        // const password = req.body.password;
         try {
-            const user = await User.find(email);
-            res.status(200).json(user);
+            const user = await User.findOne({email: req.params.email, password: req.params.password});
+            if(user){
+                res.status(201).json({message: 'Вы успешно авторизировались!'});
+            }else{
+                res.status(409).json({message: 'Пользователь не найден!'})
+            }
         } catch (err) {
             res.status(404).json({message: err.message});
         }
