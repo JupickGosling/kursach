@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const uri = process.env.DB_URI;
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -21,7 +22,7 @@ const options = {
     socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
     family: 4 // Use IPv4, skip trying IPv6
 }
-const uri = 'mongodb+srv://adm:123@posts.no5cfoi.mongodb.net/BlogPosts?retryWrites=true&w=majority'
+// const uri = 'mongodb+srv://adm:123@posts.no5cfoi.mongodb.net/BlogPosts?retryWrites=true&w=majority'
 // const uri = 'mongodb://localhost:27017/notif_desk'
 
 const connectWithDB = () => {
