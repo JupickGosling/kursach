@@ -21,29 +21,25 @@
                     required
                   ></v-text-field>
 
-                  <v-select
-                    v-model="select"
-                    :items="items"
-                    :rules="[v => !!v || 'Item is required']"
-                    label="Item"
-                    required
-                  ></v-select>
-
-                  <v-checkbox
+                  <div>
+                    <v-checkbox
                     v-model="checkbox"
                     :rules="[v => !!v || 'You must agree to continue!']"
                     label="Do you agree?"
-                    required
-                  ></v-checkbox>
-              
+                    required>
+                  </v-checkbox>
+
+                  <a href="/register">Зарегистрироваться?</a>
+                  </div>
+                  
                   <v-btn
+                    color="success"
                     class="mr-4"
                     @click="submit"
-                  >
-                    submit
+                  >Login
                   </v-btn>
                   <v-btn @click="reset">
-                    clear
+                    Clear
                   </v-btn>
                 </v-form>
             </v-card>
@@ -56,13 +52,6 @@
     data: () => ({
       valid: true,
       name: '',
-      select: null,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ],
       checkbox: false,
       nameRules: [
         v => !!v || 'Name is required',
@@ -80,7 +69,7 @@
       },
       reset () {
         this.$refs.form.reset()
-      },
+      }
     },
   }
 </script>

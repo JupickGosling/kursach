@@ -4,6 +4,6 @@ const AUTH = require('../controllers/auth');
 
 router.get('/login/:email/:password', AUTH.loginUser);
 router.post("/register", AUTH.registerUser);
-router.get("/", AUTH.fetchAllUser);
+router.get("/all", AUTH.fetchAllUser);
 
 module.exports = router;
