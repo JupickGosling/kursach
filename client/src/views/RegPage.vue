@@ -23,9 +23,10 @@
                     ></v-text-field>
  
                     <a href="/login">Уже есть аккаунт?</a>
-
-                    <v-btn type="sumbit" class="mr-4" color="success">Register</v-btn>
-                    <v-btn @click="reset">clear</v-btn>
+                    <div>
+                      <v-btn type="sumbit" class="mr-4" color="success">Register</v-btn>
+                      <v-btn @click="reset">clear</v-btn>
+                    </div>
                   </v-form>
               </v-card>
           </v-col>
