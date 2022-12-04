@@ -50,15 +50,5 @@ module.exports = class AUTH {
         }else{
             res.status(404).json({message: 'Пользователя с таким email не существует.'});
         }
-        // try {
-        //     const user = await User.findOne({email: req.params.email, password: req.params.password});
-        //     if(user){
-        //         res.status(201).json({message: 'Вы успешно авторизировались!'});
-        //     }else{
-        //         res.status(409).json({message: 'Пользователь не найден!'})
-        //     }
-        // } catch (err) {
-        //     res.status(404).json({message: err.message});
-        // }
     }
 }
