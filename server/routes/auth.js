@@ -13,7 +13,7 @@ let upload = multer({
     storage: storage,
 }).single();
 
-router.get('/login/:email/:password', AUTH.loginUser);
+router.get('/login', AUTH.loginUser);
 router.post("/register", upload, AUTH.registerUser);
 router.get("/all", AUTH.fetchAllUser);
 

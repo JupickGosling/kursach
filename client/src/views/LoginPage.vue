@@ -60,7 +60,7 @@ export default{
       fd.append('email', this.user.email);
       fd.append('password', this.user.password);
       if(this.$refs.form.validate()){
-        const response = await AUTH.loginUser(fd);
+        const response = await AUTH.fetchUser(fd);
         this.$router.push({ name: 'home', params: {message: response.message} });
       }
     },
