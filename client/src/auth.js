@@ -10,8 +10,8 @@ export default class AUTH {
         const res = await axios.post(`${url}/register`,user);
         return res.data;
     }
-    static async fetchUser(user){
-        const res = await axios.get(`${url}/login`,user);
+    static async fetchUser(email,password){
+        const res = await axios.get(`${url}/login/${email}/${password}`);
         return res.data;
     }
 }
