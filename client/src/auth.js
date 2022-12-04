@@ -10,4 +10,8 @@ export default class AUTH {
         const res = await axios.post(`${url}/register`,user);
         return res.data;
     }
+    static async loginUser(user){
+        const res = await axios.post(`${url}/login`,user);
+        return res.data;
+    }
 }

@@ -59,8 +59,6 @@ export default{
         if(this.$refs.form.validate()){
           const response = await AUTH.createUser(fd);
           this.$router.push({ name: 'login', params: {message: response.message} });
-        }else{
-
         }
       },
       reset () {

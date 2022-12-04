@@ -8,42 +8,28 @@
             <v-card class="pa-5">
                 <v-card-title>Sign In</v-card-title>
                 <v-divider></v-divider>
-                <v-form ref="form" v-model="valid" lazy-validation>
+                <v-form ref="form" @submit.prevent="submitForm" class="pa-5" enctype="multipart/form-data">
+                    
                   <v-text-field
-                    v-model="name"
-                    :counter="10"
-                    :rules="nameRules"
-                    label="Name"
-                    required
+                      v-model="user.email"
+                      :rules="emailRules"
+                      label="E-mail"
+                      required
                   ></v-text-field>
 
-                  <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="E-mail"
-                    required
+                  <v-text-field 
+                      v-model="user.password" 
+                      :counter="(min,max)"
+                      :rules="rules"
+                      label="Password"
+                      required
                   ></v-text-field>
-
-                  <div>
-                    <v-checkbox
-                    v-model="checkbox"
-                    :rules="[v => !!v || 'You must agree to continue!']"
-                    label="Do you agree?"
-                    required>
-                  </v-checkbox>
 
                   <a href="/register">Зарегистрироваться?</a>
+                  <div>
+                    <v-btn type="sumbit" class="mr-4" color="success">Login</v-btn>
+                    <v-btn @click="reset">clear</v-btn>
                   </div>
-                  
-                  <v-btn
-                    color="success"
-                    class="mr-4"
-                    @click="submit"
-                  >Login
-                  </v-btn>
-                  <v-btn @click="reset">
-                    Clear
-                  </v-btn>
                 </v-form>
             </v-card>
         </v-col>
@@ -51,28 +37,59 @@
 </v-container>
 </template>
 <script>
-  export default {
-    data: () => ({
-      valid: true,
-      name: '',
-      checkbox: false,
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
-      ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-    }),
-    methods: {
-      submit () {
-        this.$v.$touch()
+var FormData = require('form-data');
+import AUTH from '../auth';
+export default{
+  data(){
+    return{
+      user:{
+          email: "",
+          password: "",
       },
-      reset () {
-        this.$refs.form.reset()
+      max: 100,
+      min: 8,
+      emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+    }
+  },
+  methods: {
+    async submitForm () {
+      const fd = new FormData();
+      fd.append('email', this.user.email);
+      fd.append('password', this.user.password);
+      if(this.$refs.form.validate()){
+        const response = await AUTH.loginUser(fd);
+        this.$router.push({ name: 'home', params: {message: response.message} });
       }
     },
-  }
+    reset () {
+      this.$refs.form.reset()
+    },
+  },
+  computed: {
+    rules () {
+      const rules = []
+
+      if (this.max) {
+        const rule =
+          v => (v || '').length <= this.max ||
+            `A maximum of ${this.max} characters is allowed`
+
+        rules.push(rule)
+      }
+
+      if (this.min) {
+        const rule =
+          v => (v || '').length >= this.min ||
+            `A minimum of ${this.min} characters is allowed`
+
+        rules.push(rule)
+      }
+
+      return rules
+    },
+  },
+}
 </script>
