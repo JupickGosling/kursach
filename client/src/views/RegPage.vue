@@ -43,10 +43,8 @@ export default{
             email: "",
             password: "",
         },
-        valid: true,
         max: 100,
         min: 8,
-        checkbox: false,
         emailRules: [
             v => !!v || 'E-mail is required',
             v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -59,9 +57,11 @@ export default{
         fd.append('email', this.user.email);
         fd.append('password', this.user.password);
         if(this.$refs.form.validate()){
-            const response = await AUTH.createUser(fd);
-            this.$router.push({ name: 'login', params: {message: response.message} });
-        };
+          const response = await AUTH.createUser(fd);
+          this.$router.push({ name: 'login', params: {message: response.message} });
+        }else{
+
+        }
       },
       reset () {
         this.$refs.form.reset()

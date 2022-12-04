@@ -1,6 +1,7 @@
 const bcr = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const User = require('../models/User')
-
+const keys = require('../config/keys')
 module.exports = class AUTH {
 
     static async fetchAllUser(req, res){
@@ -15,9 +16,7 @@ module.exports = class AUTH {
     static async registerUser(req, res){
         const condit = await User.findOne({email: req.body.email});
         if(condit){
-            res.status(409).json({
-                message: 'Пользователь с таким email уже существует.'
-            });
+            res.status(409).json({message: 'Пользователь с таким email уже существует.'});
         }else{
             const sait = bcr.genSaltSync(10);
             const password = req.body.password;
@@ -33,26 +32,33 @@ module.exports = class AUTH {
                 res.status(400).json({message: err.message});
             }
         }
-
-        // const user = req.body;
-        // try {
-        //     await User.create(user);
-        //     res.status(201).json({message: 'User created!'});
-        // } catch (err) {
-        //     res.status(400).json({message: err.message});
-        // }
     }
 
     static async loginUser(req, res){
-        try {
-            const user = await User.findOne({email: req.params.email, password: req.params.password});
-            if(user){
-                res.status(201).json({message: 'Вы успешно авторизировались!'});
+        const condit = await User.findOne({email: req.body.email});
+        if(condit){
+            const pass = bcr.compareSync(req.body.password, condit.password);
+            if(pass){
+                const token = jwt.sign({
+                    email: condit.email,
+                    userId: condit._id
+                }, keys.jwt, {expiresIn: 60*60})
+                res.status(201).json({token: token})
             }else{
-                res.status(409).json({message: 'Пользователь не найден!'})
+                res.status(401).json({message: 'В ввели не правильный пароль. Попробуйте снова.'});
             }
-        } catch (err) {
-            res.status(404).json({message: err.message});
+        }else{
+            res.status(404).json({message: 'Пользователя с таким email не существует.'});
         }
+        // try {
+        //     const user = await User.findOne({email: req.params.email, password: req.params.password});
+        //     if(user){
+        //         res.status(201).json({message: 'Вы успешно авторизировались!'});
+        //     }else{
+        //         res.status(409).json({message: 'Пользователь не найден!'})
+        //     }
+        // } catch (err) {
+        //     res.status(404).json({message: err.message});
+        // }
     }
 }
