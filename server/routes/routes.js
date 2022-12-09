@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const API = require('../controllers/api');
+const COM = require('../controllers/com');
 const multer = require('multer');
 
 let storage = multer.diskStorage({
@@ -21,5 +22,6 @@ router.get("/:id", API.fetchPostByID);
 router.post("/", upload, API.createPost);
 router.patch("/:id", upload, API.updatePost);
 router.delete("/:id", API.deletePost);
+router.get("/:id", COM.fetchAllComment);
 
 module.exports = router;

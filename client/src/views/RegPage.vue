@@ -6,14 +6,13 @@
                   <v-card-title>Sign Up</v-card-title>
                   <v-divider></v-divider>
                   <v-form ref="form" @submit.prevent="submitForm" class="pa-5" enctype="multipart/form-data">
-                      
+                    <!-- v-snackbar -->
                     <v-text-field
                         v-model="user.email"
                         :rules="emailRules"
                         label="E-mail"
                         required
                     ></v-text-field>
-
                     <v-text-field 
                         v-model="user.password" 
                         :counter="(min,max)"
