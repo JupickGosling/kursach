@@ -87,7 +87,7 @@ import COM from "../com";
             
             return{
                 snackbar: false,
-                text: `Hello, I'm a snackbar`,
+                text: ``,
                 timeout: 2000,
                 post: {},
                 comments: [],
