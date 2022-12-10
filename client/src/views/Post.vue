@@ -41,22 +41,21 @@
                         <v-btn depresse
                         v-bind="attrs"
                         v-on="on" @click="addPost(post._id), snackbar = true">Отправить</v-btn>
-                    </div>
-                    <v-divider/>
+                    </div>                    
                 </v-card>
-                <v-col sm="10" class="pa-4 mx-auto" v-for="comment in comments" :key="comment._id">
-                    <v-card class="pa-2">
-                      <v-card-title class="headline">
-                        {{comment.name}}
-                      </v-card-title>
-                      <v-card-text class="py-0">
-                        <p1>{{comment.content}}</p1>
-                      </v-card-text>
-                      <v-card-text class="py-0">
-                        <p1>{{comment.created}}</p1>
-                      </v-card-text>
-                      </v-card> 
-                </v-col>
+            </v-col>
+            <v-col sm="10" class="pa-4 mx-auto" v-for="comment in comments" :key="comment._id">
+                <v-card class="pa-2">
+                  <v-card-title class="headline">
+                    {{comment.name}}
+                  </v-card-title>
+                  <v-card-text class="py-0">
+                    <p1>{{comment.content}}</p1>
+                  </v-card-text>
+                  <v-card-text class="py-0">
+                    <p1>{{comment.created}}</p1>
+                  </v-card-text>
+                  </v-card> 
             </v-col>
         </v-row>
         <v-snackbar
