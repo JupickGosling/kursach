@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AUTH = require('../controllers/auth');
+const Check = require('../utils/checkAuth')
 const multer = require('multer');
 
 let storage = multer.diskStorage({
@@ -13,7 +14,7 @@ let upload = multer({
     storage: storage,
 }).single();
 
-router.get('/login/:email/:password', AUTH.loginUser);
+router.post("/login", upload, Check.checkAuth, AUTH.loginUser);
 router.post("/register", upload, AUTH.registerUser);
 router.get("/all", AUTH.fetchAllUser);
 

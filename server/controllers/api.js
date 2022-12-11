@@ -14,11 +14,16 @@ module.exports = class API {
     static async fetchPostByID(req, res){
         const id = req.params.id;
         try {
-            const post = await Post.findById(id);
+            const post = await Post.findById(id).populate('comments');
             res.status(200).json(post);
         } catch (err) {
             res.status(404).json({message: err.message});
         }
+        // Post.findById(req.params.id).populate('comments').exec(function(err, results) {
+        //     if(err) {console.log(err)}
+        //      res.render('post', {title: 'Post details', post: 
+        //    results, comments: results.comments})
+        //     })
     }
 
     static async createPost(req, res){

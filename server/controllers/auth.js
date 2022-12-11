@@ -2,6 +2,7 @@ const bcr = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const keys = require('../config/keys')
+
 module.exports = class AUTH {
 
     static async fetchAllUser(req, res){
@@ -14,41 +15,73 @@ module.exports = class AUTH {
     }
 
     static async registerUser(req, res){
-        const condit = await User.findOne({email: req.body.email});
-        if(condit){
-            res.status(409).json({message: 'Пользователь с таким email уже существует.'});
-        }else{
-            const sait = bcr.genSaltSync(10);
-            const password = req.body.password;
-            const user = new User({
-                email: req.body.email,
-                password: bcr.hashSync(password, sait)
-            });
+        try {
+            const {login,password} = req.body
 
-            try {
-                await user.save();
-                res.status(201).json({message: 'Пользователь успешно зарегистирован!'});
-            } catch (err) {
-                res.status(400).json({message: err.message});
+            const isUsed = await User.findOne({login})
+
+            if(isUsed){
+                return res.json({message: 'Данный логин уже занят!'})
             }
+
+            const salt = bcr.genSaltSync(10);
+            const hash = bcr.hashSync(password, salt);
+
+            const newUser = User({
+                login, 
+                password: hash,
+            })
+
+            await newUser.save();
+
+            res.json({
+                newUser, message: 'Регистрация прошла успешно!',
+            })
+
+        } catch (err) {
+            res.json({message: 'Ошибка при регистрации!'})
         }
     }
 
     static async loginUser(req, res){
-        const condit = await User.findOne({email: req.body.email});
-        if(condit){
-            const pass = bcr.compareSync(req.body.password, condit.password);
-            if(pass){
-                const token = jwt.sign({
-                    email: condit.email,
-                    userId: condit._id
-                }, keys.jwt, {expiresIn: 60*60})
-                res.status(201).json({token: token})
-            }else{
-                res.status(401).json({message: 'В ввели не правильный пароль. Попробуйте снова.'});
+        try {
+            const {login,password} = req.body
+            const user = await User.findOne({login})
+            if(!user){
+                return res.json({message: 'Пользователя с таким логином не найдено!'})
             }
-        }else{
-            res.status(404).json({message: 'Пользователя с таким email не существует.'});
+
+            const isPass = await bcr.compare(password, user.password)
+
+            if(!isPass){
+                return res.json({message: 'Неверный пароль!'})
+            }
+
+            const token = jwt.sign({
+                id: user._id,
+            }, process.env.JWT_SECRET,{expiresIn: '30d'})
+
+            res.json({token, user, message: 'Вы в системе!'})
+        } catch (err) {
+            res.json({message: 'Ошибка при авторизации!'})
+        }
+    }
+
+    static async getMe(req, res){
+        try {
+            const user = await User.findById(req.userId)
+
+            if(!user){
+                return res.json({message: 'Пользователя с таким логином не найдено!'})
+            }
+
+            const token = jwt.sign({
+                id: user._id,
+            }, process.env.JWT_SECRET,{expiresIn: '30d'})
+
+            res.json({user, token})
+        } catch (err) {
+            res.json({message: 'Нет доступа!'})
         }
     }
 }

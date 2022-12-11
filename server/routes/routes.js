@@ -22,6 +22,8 @@ router.get("/:id", API.fetchPostByID);
 router.post("/", upload, API.createPost);
 router.patch("/:id", upload, API.updatePost);
 router.delete("/:id", API.deletePost);
-router.get("/:id", COM.fetchAllComment);
+// router.get('/:id/comment', COM.fetchPostByIDForComment);
+router.get('/:id/comment', COM.fetchComById);
+router.post('/:id/comment', COM.createComment);
 
 module.exports = router;

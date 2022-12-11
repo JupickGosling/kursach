@@ -3,19 +3,19 @@ const mongoose = require('mongoose');
 const comShema = mongoose.Schema({
     name: {
         type: String,
-        default: "User",
-    },
-    page_id: {
-        type: String,
-        required: true
+        default: "Гость",
     },
     content: {
-        type:String,
+        type: String,
         required: true
     },
     created: {
         type: Date,
         default: Date.now
+    },
+    post: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'post'
     }
 })
 module.exports  = mongoose.model('comment', comShema);

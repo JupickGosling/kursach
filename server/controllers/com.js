@@ -1,24 +1,35 @@
 const Comment = require('../models/com');
+const Post = require('../models/posts')
 const fs = require('fs');
 
 module.exports = class COM {
-    static async fetchPostByIDForComment(req, res){
-        const id = req.params.id;
+    static async fetchComById(req, res){
         try {
-            const comment = await Comment.findById(id);
+            const comment = await Comment.find({post_id: req.params.post_id}).sort({created: -1});
             res.status(200).json(comment);
         } catch (err) {
             res.status(404).json({message: err.message});
         }
     }
     static async createComment(req, res){
-        const comment = req.body;
-        try {
-            await Comment.create(comment);
-            res.status(201).json({message: 'Comment created!'});
-        } catch (err) {
-            res.status(400).json({message: err.message});
-        }
+        // find out which post you are commenting
+        const id = req.params.id;
+        // get the comment text and record post id
+         const comment = new Comment({
+         content: req.body.content,
+         post: id
+      })
+        // save comment
+     await comment.save();
+        // get this particular post
+     const postRelated = await Post.findById(id);
+        // push the comment into the post.comments array
+     postRelated.comments.push(comment);
+        // save and redirect...
+     await postRelated.save(function(err) {
+     if(err) {console.log(err)}
+     res.redirect('/')
+     })
     }
     static async fetchAllComment(req, res){
         try {

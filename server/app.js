@@ -22,8 +22,6 @@ const options = {
     socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
     family: 4 // Use IPv4, skip trying IPv6
 }
-// const uri = 'mongodb+srv://adm:123@posts.no5cfoi.mongodb.net/BlogPosts?retryWrites=true&w=majority'
-// const uri = 'mongodb://localhost:27017/notif_desk'
 
 const connectWithDB = () => {
     mongoose.connect(uri, options, (err, db) => {
@@ -41,7 +39,7 @@ connectWithDB()
 // }).then(() => console.log("Connected to the database!")).catch((err) => console.log(err));
 
 app.use("/api/post", require("./routes/routes"));
-app.use("/user", require("./routes/auth"));
+app.use("/api/auth", require("./routes/auth"));
 app.use("/com", require("./routes/com"));
 
 if(process.env.NODE_ENV == 'production'){

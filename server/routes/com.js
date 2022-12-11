@@ -15,6 +15,7 @@ let upload = multer({
 
 // router.get("/:id", upload, COM.fetchPostByIDForComment);
 router.get("/all", COM.fetchAllComment);
+router.get("/:post_id", COM.fetchComById);
 router.post("/", upload, COM.createComment);
 
 module.exports = router;
