@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const API = require('../controllers/api');
 const COM = require('../controllers/com');
+const Check = require('../utils/checkAuth');
 const multer = require('multer');
 
 let storage = multer.diskStorage({

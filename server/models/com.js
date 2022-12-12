@@ -15,7 +15,7 @@ const comShema = mongoose.Schema({
     },
     post: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'post'
+        ref: 'Post'
     }
 })
-module.exports  = mongoose.model('comment', comShema);
+module.exports  = mongoose.model('Comment', comShema);

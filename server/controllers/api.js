@@ -1,4 +1,4 @@
-const Post = require('../models/posts');
+const Post = require('../models/Post');
 const fs = require('fs');
 
 module.exports = class API {
@@ -27,7 +27,8 @@ module.exports = class API {
     }
 
     static async createPost(req, res){
-        const post = req.body;
+        try {
+            const post = req.body;
         const imagename = req.file.filename;
         post.image = imagename;
         try {
@@ -35,6 +36,9 @@ module.exports = class API {
             res.status(201).json({message: 'Post created!'});
         } catch (err) {
             res.status(400).json({message: err.message});
+        }
+        } catch (err) {
+            
         }
     }
 
