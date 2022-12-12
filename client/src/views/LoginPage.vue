@@ -11,9 +11,9 @@
                 <v-form ref="form" @submit.prevent="submitForm" class="pa-5" enctype="multipart/form-data">
                     
                   <v-text-field
-                      v-model="user.email"
-                      :rules="emailRules"
-                      label="E-mail"
+                      v-model="user.login"
+                      :rules="nameRules"
+                      label="Login"
                       required
                   ></v-text-field>
 
@@ -43,18 +43,25 @@ export default{
   data(){
     return{
       user:{
-          email: "",
-          password: "",
+        login: "",
+        password: "",
       },
       max: 100,
       min: 8,
-      emailRules: [
-          v => !!v || 'E-mail is required',
-          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 25) || 'Login must be less than 25 characters',
       ],
     }
   },
   methods: {
+    // login: function () {
+    //   let login = this.user.login 
+    //   let password = this.user.password
+    //   this.$store.dispatch('login', { login, password })
+    //   .then(() => this.$router.push('/'))
+    //   .catch(err => console.log(err))
+    // },
     async submitForm () {
       const fd = new FormData();
       fd.append('email', this.user.email);

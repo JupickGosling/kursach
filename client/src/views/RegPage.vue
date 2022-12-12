@@ -8,9 +8,10 @@
                   <v-form ref="form" @submit.prevent="submitForm" class="pa-5" enctype="multipart/form-data">
                     <!-- v-snackbar -->
                     <v-text-field
-                        v-model="user.email"
-                        :rules="emailRules"
-                        label="E-mail"
+                        v-model="user.login"
+                        :counter="25"
+                        :rules="nameRules"
+                        label="Login"
                         required
                     ></v-text-field>
                     <v-text-field 
@@ -39,18 +40,27 @@ export default{
     data(){
       return{
         user:{
-            email: "",
+            login: "",
             password: "",
         },
         max: 100,
         min: 8,
-        emailRules: [
-            v => !!v || 'E-mail is required',
-            v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-        ],
+        nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 25) || 'Login must be less than 25 characters',
+      ],
       }
     },
     methods: {
+      // register: function () {
+      //   let data = {
+      //     login: this.user.login,
+      //     password: this.user.password
+      //   }
+      //   this.$store.dispatch('register', data)
+      //  .then(() => this.$router.push('/'))
+      //  .catch(err => console.log(err))
+      // },
       async submitForm () {
         const fd = new FormData();
         fd.append('email', this.user.email);

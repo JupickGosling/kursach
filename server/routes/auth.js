@@ -14,8 +14,9 @@ let upload = multer({
     storage: storage,
 }).single();
 
-router.post("/login", upload, Check.checkAuth, AUTH.loginUser);
+router.post("/login", upload, AUTH.loginUser);
 router.post("/register", upload, AUTH.registerUser);
+router.get("/me", Check.checkAuth, AUTH.getMe);
 router.get("/all", AUTH.fetchAllUser);
 
 module.exports = router;
