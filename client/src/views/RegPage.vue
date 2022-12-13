@@ -5,7 +5,7 @@
               <v-card class="pa-5">
                   <v-card-title>Sign Up</v-card-title>
                   <v-divider></v-divider>
-                  <v-form ref="form" @submit.prevent="submitForm" class="pa-5" enctype="multipart/form-data">
+                  <v-form ref="form" @submit.prevent="register" class="pa-5" enctype="multipart/form-data">
                     <!-- v-snackbar -->
                     <v-text-field
                         v-model="user.login"
@@ -52,15 +52,15 @@ export default{
       }
     },
     methods: {
-      // register: function () {
-      //   let data = {
-      //     login: this.user.login,
-      //     password: this.user.password
-      //   }
-      //   this.$store.dispatch('register', data)
-      //  .then(() => this.$router.push('/'))
-      //  .catch(err => console.log(err))
-      // },
+      register: function () {
+        let data = {
+          login: this.user.login,
+          password: this.user.password
+        }
+        this.$store.dispatch('register', data)
+       .then(() => this.$router.push('/'))
+       .catch(err => console.log(err))
+      },
       async submitForm () {
         const fd = new FormData();
         fd.append('email', this.user.email);

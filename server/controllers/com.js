@@ -1,5 +1,5 @@
 const Comment = require('../models/com');
-const Post = require('../models/posts')
+const Post = require('../models/Post')
 const fs = require('fs');
 
 module.exports = class COM {

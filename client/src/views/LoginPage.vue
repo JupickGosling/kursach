@@ -8,7 +8,7 @@
             <v-card class="pa-5">
                 <v-card-title>Sign In</v-card-title>
                 <v-divider></v-divider>
-                <v-form ref="form" @submit.prevent="submitForm" class="pa-5" enctype="multipart/form-data">
+                <v-form ref="form" @submit.prevent="login" class="pa-5" enctype="multipart/form-data">
                     
                   <v-text-field
                       v-model="user.login"
@@ -55,13 +55,13 @@ export default{
     }
   },
   methods: {
-    // login: function () {
-    //   let login = this.user.login 
-    //   let password = this.user.password
-    //   this.$store.dispatch('login', { login, password })
-    //   .then(() => this.$router.push('/'))
-    //   .catch(err => console.log(err))
-    // },
+    login: function () {
+      let login = this.user.login 
+      let password = this.user.password
+      this.$store.dispatch('login', { login, password })
+      .then(() => this.$router.push('/'))
+      .catch(err => console.log(err))
+    },
     async submitForm () {
       const fd = new FormData();
       fd.append('email', this.user.email);

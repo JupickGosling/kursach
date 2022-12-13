@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const User = require('../models/User');
 const fs = require('fs');
 
 module.exports = class API {
@@ -28,17 +29,33 @@ module.exports = class API {
 
     static async createPost(req, res){
         try {
-            const post = req.body;
-        const imagename = req.file.filename;
-        post.image = imagename;
-        try {
-            await Post.create(post);
-            res.status(201).json({message: 'Post created!'});
+            const {title, category, content} = req.body
+            const user = await User.findById(req.userId)
+
+            // if(req.files){
+            //     let fileName = Date.now().toString() + req.files.image.name
+                
+            // }
+            const post = new Post({
+                username: user.username,
+                title,
+                category,
+                content,
+                author: req.userId,
+            })
+            const imagename = req.file.filename;
+            post.image = imagename;
+            try {
+                await Post.create(post);
+                await User.findByIdAndUpdate(req.userId, {
+                    $push: {posts: post},
+                })
+                res.status(201).json({message: 'Post created!'});
+            } catch (err) {
+                res.status(400).json({message: err.message});
+            }
         } catch (err) {
             res.status(400).json({message: err.message});
-        }
-        } catch (err) {
-            
         }
     }
 

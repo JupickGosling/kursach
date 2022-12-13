@@ -58,6 +58,16 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Объявления пу-пу-пу</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-icon>mdi-export</v-icon>
+      </v-btn>
+      <!-- <v-toolbar>
+        <v-toolbar-title>Объявления пу-пу-пу</v-toolbar-title>
+        <v-btn icon>
+          <v-icon>mdi-export</v-icon>
+        </v-btn>
+      </v-toolbar> -->
     </v-app-bar>
 
     <v-main>
@@ -81,5 +91,16 @@
         ['Settings', 'mdi-cog-outline'],
       ],
     }),
+    computed : {
+      isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
+    },
+    methods: {
+      logout: function () {
+        this.$store.dispatch('logout')
+        .then(() => {
+          this.$router.push('/login')
+        })
+      }
+    },
   }
 </script>

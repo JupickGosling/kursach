@@ -38,7 +38,7 @@ connectWithDB()
 //     useCreateIndex: true
 // }).then(() => console.log("Connected to the database!")).catch((err) => console.log(err));
 
-app.use("/api/posts", require("./routes/routes"));
+app.use("/api/post", require("./routes/routes"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/com", require("./routes/com"));
 
