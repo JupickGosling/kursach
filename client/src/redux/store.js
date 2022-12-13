@@ -1,5 +1,22 @@
-import {configureStore} from '@reduxjs/toolkit'
+import Vue from 'vue'
+import Vuex from 'Vuex'
+import axios from 'axios'
 
-export const store = configureStore({
-    reducer: {},
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  state: {
+    status: '',
+    token: localStorage.getItem('token') || '',
+    user : {}
+  },
+  mutations: {
+
+  },
+  actions: {
+
+  },
+  getters : {
+
+  }
 })
