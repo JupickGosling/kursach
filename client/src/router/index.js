@@ -16,6 +16,9 @@ const routes = [
     path: '/add-post',
     name: 'add-post',
     component: AddPost,
+    meta: { 
+      requiresAuth: true
+    }
   },
   {
     path: '/post/:id',
@@ -26,6 +29,9 @@ const routes = [
     path: '/edit-post/:id',
     name: 'edit-post',
     component: EditPost,
+    meta: { 
+      requiresAuth: true
+    }
   },
   {
     path: '/login',
@@ -51,6 +57,18 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/login') 
+  } else {
+    next() 
+  }
 })
 
 export default router

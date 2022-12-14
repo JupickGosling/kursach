@@ -4,9 +4,3 @@ module.exports = defineConfig({
     'vuetify'
   ]
 })
-
-const { VuetifyLoaderPlugin } = require('vuetify-loader')
-
-exports.plugins.push(
-  new VuetifyLoaderPlugin()
-)
