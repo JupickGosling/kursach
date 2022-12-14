@@ -16,9 +16,9 @@ const routes = [
     path: '/add-post',
     name: 'add-post',
     component: AddPost,
-    meta: { 
-      requiresAuth: true
-    }
+    // meta: { 
+    //   requiresAuth: true
+    // }
   },
   {
     path: '/post/:id',

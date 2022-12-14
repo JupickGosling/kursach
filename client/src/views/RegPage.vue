@@ -6,7 +6,6 @@
                   <v-card-title>Sign Up</v-card-title>
                   <v-divider></v-divider>
                   <v-form ref="form" @submit.prevent="register" class="pa-5" enctype="multipart/form-data">
-                    <!-- v-snackbar -->
                     <v-text-field
                         v-model="user.login"
                         :counter="25"
@@ -63,7 +62,7 @@ export default{
       },
       async submitForm () {
         const fd = new FormData();
-        fd.append('email', this.user.email);
+        fd.append('login', this.user.login);
         fd.append('password', this.user.password);
         if(this.$refs.form.validate()){
           const response = await AUTH.createUser(fd);

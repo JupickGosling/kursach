@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = "/user"
+const url = "/api/auth"
 
 export default class AUTH {
     static async getAllUsers(){
