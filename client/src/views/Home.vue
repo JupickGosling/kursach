@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import API from "../api"
+import API from "../api.js"
   export default {
     name: 'Home',
     data(){

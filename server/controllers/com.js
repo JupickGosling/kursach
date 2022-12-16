@@ -1,4 +1,4 @@
-const Comment = require('../models/com');
+const Comment = require('../models/comment');
 const Post = require('../models/Post')
 const fs = require('fs');
 
@@ -12,24 +12,41 @@ module.exports = class COM {
         }
     }
     static async createComment(req, res){
-        // find out which post you are commenting
-        const id = req.params.id;
-        // get the comment text and record post id
-         const comment = new Comment({
-         content: req.body.content,
-         post: id
-      })
-        // save comment
-     await comment.save();
-        // get this particular post
-     const postRelated = await Post.findById(id);
-        // push the comment into the post.comments array
-     postRelated.comments.push(comment);
-        // save and redirect...
-     await postRelated.save(function(err) {
-     if(err) {console.log(err)}
-     res.redirect('/')
-     })
+        try {
+            const {postId, content} = req.body
+            if(!content) return res.json({message: "Комментарий не может быть пустым!"})
+
+            const newComment = new Comment({content})
+            await newComment.save()
+
+            try {
+                await Post.findByIdAndUpdate(postId,{
+                    $push: {comments: newComment._id}
+                })
+            } catch (err) {
+                res.json({message: err})
+            }
+
+            res.json({message: 'Комментарий создан',newComment})
+            // const id = req.params.id;
+            // // get the comment text and record post id
+            // const comment = new Comment({
+            // content: req.body.content,
+            // post: id
+            // })
+            // // save comment
+            // await comment.save();
+            //     // get this particular post
+            // const postRelated = await Post.findById(id);
+            //     // push the comment into the post.comments array
+            // postRelated.comments.push(comment);
+            //     // save and redirect...
+            // await postRelated.save(function(err) {
+            // if(err) {console.log(err)}
+            // res.redirect('/')
+        } catch (err) {
+            res.json({message: err})
+        }
     }
     static async fetchAllComment(req, res){
         try {

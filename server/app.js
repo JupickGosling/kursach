@@ -40,7 +40,7 @@ connectWithDB()
 
 app.use("/api/post", require("./routes/routes"));
 app.use("/api/auth", require("./routes/auth"));
-app.use("/com", require("./routes/com"));
+app.use("/api/com", require("./routes/com"));
 
 if(process.env.NODE_ENV == 'production'){
   app.use(express.static(__dirname+'/dist/'));

@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = "/post"
+const url = "/api/post"
 
 export default class API {
     static async getAllPost(){

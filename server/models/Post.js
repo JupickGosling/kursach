@@ -29,7 +29,7 @@ const postShema = mongoose.Schema({
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post'
+        ref: 'User'
     },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,

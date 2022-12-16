@@ -37,11 +37,11 @@ module.exports = class API {
                 
             // }
             const post = new Post({
-                username: user.username,
+                // username: user.username,
                 title,
                 category,
                 content,
-                author: req.userId,
+                // author: req.userId,
             })
             const imagename = req.file.filename;
             post.image = imagename;
