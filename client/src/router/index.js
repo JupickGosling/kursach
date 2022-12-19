@@ -6,6 +6,14 @@ import Post from '../views/Post.vue'
 import EditPost from '../views/EditPost.vue'
 Vue.use(VueRouter)
 
+const isLoggedIn = (to, from, next) => {
+  if (store.getters.isUserLoggedIn) {
+    next()
+    return
+  }
+  next('/login')
+}
+
 const routes = [
   {
     path: '/',
