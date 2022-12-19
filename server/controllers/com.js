@@ -11,9 +11,11 @@ module.exports = class COM {
             res.status(404).json({message: err.message});
         }
     }
+
     static async createComment(req, res){
         try {
             const {postId, content} = req.body
+            
             if(!content) return res.json({message: "Комментарий не может быть пустым!"})
 
             const newComment = new Comment({content})
@@ -28,26 +30,11 @@ module.exports = class COM {
             }
 
             res.json({message: 'Комментарий создан',newComment})
-            // const id = req.params.id;
-            // // get the comment text and record post id
-            // const comment = new Comment({
-            // content: req.body.content,
-            // post: id
-            // })
-            // // save comment
-            // await comment.save();
-            //     // get this particular post
-            // const postRelated = await Post.findById(id);
-            //     // push the comment into the post.comments array
-            // postRelated.comments.push(comment);
-            //     // save and redirect...
-            // await postRelated.save(function(err) {
-            // if(err) {console.log(err)}
-            // res.redirect('/')
         } catch (err) {
             res.json({message: err})
         }
     }
+
     static async fetchAllComment(req, res){
         try {
             const comments = await Comment.find().sort({created: -1});

@@ -8,21 +8,24 @@
             <v-card class="pa-5">
                 <v-card-title>Sign In</v-card-title>
                 <v-divider></v-divider>
-                <v-form ref="form" @submit.prevent="login" class="pa-5" enctype="multipart/form-data">
+                <v-form ref="form" @submit.prevent="submitForm" class="pa-5" enctype="multipart/form-data">
                     
                   <v-text-field
-                      v-model="user.login"
-                      :rules="nameRules"
-                      label="Login"
-                      required
+                    v-model="user.login"
+                    :rules="nameRules"
+                    label="Login"
+                    required
                   ></v-text-field>
 
                   <v-text-field 
-                      v-model="user.password" 
-                      :counter="(min,max)"
-                      :rules="rules"
-                      label="Password"
-                      required
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="show1 ? 'text' : 'password'"
+                    @click:append="show1 = !show1"
+                    v-model="user.password" 
+                    :counter="(min,max)"
+                    :rules="rules"
+                    label="Password"
+                    required
                   ></v-text-field>
 
                   <a href="/register">Зарегистрироваться?</a>
@@ -42,6 +45,7 @@ import AUTH from '../auth';
 export default{
   data(){
     return{
+      show1: false,
       user:{
         login: "",
         password: "",
@@ -55,13 +59,13 @@ export default{
     }
   },
   methods: {
-    login: function () {
-      let login = this.user.login 
-      let password = this.user.password
-      this.$store.dispatch('login', { login, password })
-      .then(() => this.$router.push('/'))
-      .catch(err => console.log(err))
-    },
+    // login: function () {
+    //   let login = this.user.login 
+    //   let password = this.user.password
+    //   this.$store.dispatch('login', { login, password })
+    //   .then(() => this.$router.push('/'))
+    //   .catch(err => console.log(err))
+    // },
     async submitForm () {
       const fd = new FormData();
       fd.append('email', this.user.email);

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const postShema = mongoose.Schema({
-    username: {
-        type: String,
-    },
+    // username: {
+    //     type: String,
+    // },
     title: {
         type: String,
         trim: true,
@@ -27,10 +27,10 @@ const postShema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
+    // author: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User'
+    // },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'

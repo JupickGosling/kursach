@@ -11,11 +11,10 @@ let storage = multer.diskStorage({
 
 let upload = multer({
     storage: storage
-}).single("image");
+}).single();
 
-// router.get("/:id", upload, COM.fetchPostByIDForComment);
 router.get("/all", COM.fetchAllComment);
 router.get("/:post_id", COM.fetchComById);
-router.post("/", upload, COM.createComment);
+router.post("/:id", upload, COM.createComment);
 
 module.exports = router;

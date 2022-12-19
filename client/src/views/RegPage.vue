@@ -5,7 +5,7 @@
               <v-card class="pa-5">
                   <v-card-title>Sign Up</v-card-title>
                   <v-divider></v-divider>
-                  <v-form ref="form" @submit.prevent="register" class="pa-5" enctype="multipart/form-data">
+                  <v-form ref="form" @submit.prevent="submitForm" class="pa-5" enctype="multipart/form-data">
                     <v-text-field
                         v-model="user.login"
                         :counter="25"
@@ -14,11 +14,14 @@
                         required
                     ></v-text-field>
                     <v-text-field 
-                        v-model="user.password" 
-                        :counter="(min,max)"
-                        :rules="rules"
-                        label="Password"
-                        required
+                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="show1 ? 'text' : 'password'"
+                      @click:append="show1 = !show1"
+                      v-model="user.password" 
+                      :counter="(min,max)"
+                      :rules="rules"
+                      label="Password"
+                      required
                     ></v-text-field>
  
                     <a href="/login">Уже есть аккаунт?</a>
@@ -38,6 +41,7 @@ import AUTH from '../auth';
 export default{
     data(){
       return{
+        show1: false,
         user:{
             login: "",
             password: "",
@@ -57,7 +61,7 @@ export default{
           password: this.user.password
         }
         this.$store.dispatch('register', data)
-       .then(() => this.$router.push('/'))
+       .then(() => this.$router.push({ name: 'login', params: {message: response.message} }))
        .catch(err => console.log(err))
       },
       async submitForm () {
